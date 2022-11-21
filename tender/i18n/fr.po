@@ -1,0 +1,1255 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* tenders
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e-20190527\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-04 12:17+0000\n"
+"PO-Revision-Date: 2020-11-04 12:17+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_kanban_view_tenders
+msgid "<i class=\"fa fa-comments\" aria-label=\"Unread messages\" role=\"img\"/>"
+msgstr "<i class=\"fa fa-comments\" aria-label=\"Messages non lus\" role=\"img\"/>"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "<span class=\"o_stat_text\"> Contrat(s)</span>"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "A facturer"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Add a note"
+msgstr "Ajouter une note"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Add a product"
+msgstr "Ajouter un produit"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Add a section"
+msgstr "Ajouter une section"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Amount Due"
+msgstr "Montant dû"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__analytic_account_id
+msgid "Analytic Account"
+msgstr "Compte analytique"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Annuler"
+msgstr ""
+
+#. module: tenders
+#: selection:contract.lines,state:0
+#: selection:crm.lead,state:0
+#: selection:tender.contract,state:0
+#: selection:tender.line,state:0
+msgid "Annulé"
+msgstr ""
+
+#. module: tenders
+#: selection:crm.lead,type:0
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__lead_id
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_tree_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.tree_view_contract_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_sale_contract_tenders_filter
+msgid "Appel d'offre"
+msgstr ""
+
+#. module: tenders
+#: model:mail.message.subtype,description:sties_sub.mt_tender_create
+#: model:mail.message.subtype,name:sties_sub.mt_tender_create
+msgid "Appel d'offre crée"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__tender_id
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__tender_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__tender_id
+msgid "Appel d\\offre"
+msgstr ""
+
+#. module: tenders
+#: model:ir.actions.act_window,name:sties_sub.crm_lead_all_tenders
+#: model:ir.ui.menu,name:sties_sub.menu_sties_sub_tenders
+#: model:ir.ui.menu,name:sties_sub.sties_sub_menu_root
+#: model:ir.ui.menu,name:sties_sub.sties_sub_menu_tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Appels d'offres"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__begin_date
+msgid "Begin date"
+msgstr "Date début"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__order_id
+msgid "Bon de commande"
+msgstr ""
+
+#. module: tenders
+#: model:ir.actions.act_window,name:sties_sub.sale_action_quotations_new_from_contract
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Bons de commandes"
+msgstr ""
+
+#. module: tenders
+#: selection:contract.lines,state:0
+#: selection:crm.lead,state:0
+#: selection:tender.contract,state:0
+#: selection:tender.line,state:0
+msgid "Brouillon"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_crm_state
+msgid "CRM Tenders"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__product_updatable
+msgid "Can Edit Product"
+msgstr "Peut modifier le produit"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.generate_contract_view_form
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_lost_view_form
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_partial_won_view_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_tree_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+msgid "Client"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+msgid "Closed Date"
+msgstr "Date de clôture"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__end_date
+msgid "Closed date"
+msgstr "Date fin"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Clôturer"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__company_id
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__company_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__company_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__company_id
+msgid "Company"
+msgstr "Société"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__currency_id
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__currency_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__currency_id
+msgid "Company Currency"
+msgstr "Devise de la société"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Configure a product"
+msgstr "Configurez un article"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Confirmation Date"
+msgstr "Date de confirmation"
+
+#. module: tenders
+#: selection:contract.lines,state:0
+#: selection:crm.lead,state:0
+#: selection:tender.contract,state:0
+#: selection:tender.line,state:0
+msgid "Confirmé"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.tree_view_contract_tender
+msgid "Contract"
+msgstr "Contrat"
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_contract_extra_lines
+msgid "Contract Extra Line"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__name
+msgid "Contract N°"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.generate_contract_view_form
+msgid "Contract details"
+msgstr "Détails du contrat"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__state
+msgid "Contract line Status"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.tree_view_contract_tender
+msgid "Contracts"
+msgstr "Contrats"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_account_invoice__contract_id
+#: model:ir.model.fields,field_description:sties_sub.field_sale_order__contract_id
+msgid "Contrat"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz__name
+msgid "Contrat N°"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_sale_order_line__contract_line_id
+msgid "Contrat line"
+msgstr ""
+
+#. module: tenders
+#: model:ir.actions.act_window,name:sties_sub.sale_action_contract
+#: model:ir.ui.menu,name:sties_sub.sale_menu_contract_tenders
+msgid "Contrats"
+msgstr ""
+
+#. module: tenders
+#: model:ir.ui.menu,name:sties_sub.menu_sale_contract_tenders
+msgid "Contrats AO"
+msgstr ""
+
+#. module: tenders
+#: model:ir.actions.act_window,name:sties_sub.all_contract_tenders
+msgid "Contrats des appels d'offres"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__create_uid
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__create_uid
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz__create_uid
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__create_uid
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__create_uid
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__create_uid
+#: model:ir.model.fields,field_description:sties_sub.field_tender_lost__create_uid
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__create_date
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__create_date
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz__create_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__create_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__create_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__create_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_lost__create_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+msgid "Creation Date"
+msgstr "Date de création"
+
+#. module: tenders
+#: selection:contract.lines,state:0
+#: selection:tender.contract,state:0
+msgid "Ctôturé"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__currency_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__company_currency
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__order_partner_id
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__order_partner_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__partner_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__order_partner_id
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_sale_contract_tenders_filter
+msgid "Customer"
+msgstr "Client"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__date_closed_tender
+msgid "Date de clôture"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__date_order
+msgid "Date de l'appel d'offre"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz__signed_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__signed_date
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_sale_contract_tenders_filter
+msgid "Date de signature"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz__begin_date
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_sale_contract_tenders_filter
+msgid "Date début"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz__end_date
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_sale_contract_tenders_filter
+msgid "Date fin"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_tree_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+msgid "Date limite participation"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_kanban_view_tenders
+msgid "Delete"
+msgstr "Supprimer"
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:310
+#: code:addons/sties_sub/models/tender_contract.py:267
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__qty_delivered
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__qty_delivered
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+#, python-format
+msgid "Delivered Quantity"
+msgstr "Qté livrée"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__name
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__name
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__name
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__name
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Description"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__discount
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__discount
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__discount
+msgid "Discount (%)"
+msgstr "Remise (%)"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__display_name
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__display_name
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz__display_name
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__display_name
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__display_name
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__display_name
+#: model:ir.model.fields,field_description:sties_sub.field_tender_lost__display_name
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__display_type
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__display_type
+msgid "Display Type"
+msgstr "Type d'affichage"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_kanban_view_tenders
+msgid "Dropdown menu"
+msgstr "Menu déroulant"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Démarrer"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.generate_contract_view_form
+msgid "Détail du contrat"
+msgstr ""
+
+#. module: tenders
+#: model:ir.actions.act_window,name:sties_sub.generate_contract_view_action
+msgid "Détails du contrat"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_kanban_view_tenders
+msgid "Edit"
+msgstr "Modifier"
+
+#. module: tenders
+#: selection:contract.lines,state:0
+#: selection:tender.contract,state:0
+msgid "En cours"
+msgstr ""
+
+#. module: tenders
+#: selection:crm.lead,state:0
+#: selection:tender.line,state:0
+msgid "Envoyé"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__state
+msgid "Etat"
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:287
+#: code:addons/sties_sub/models/tender_contract.py:244
+#, python-format
+msgid "Extra line with %s "
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__invoice_ids
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Factures"
+msgstr ""
+
+#. module: tenders
+#: sql_constraint:contract.lines:0
+msgid "Forbidden values on non-accountable sale order line"
+msgstr ""
+
+#. module: tenders
+#: sql_constraint:tender.line:0
+msgid "Forbidden values on non-accountable tender line"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_generate_contract_wiz
+msgid "Generate Contract Wizard"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_tender_lost
+msgid "Get Lost Reason"
+msgstr "Cause de l'échec"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_sale_contract_tenders_filter
+msgid "Group By"
+msgstr "Regrouper par"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_partial_won_view_form
+msgid "Génération des lignes de l'appel d'offre"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Génération du contrat et liste de prix"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Générer le contrat"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.generate_contract_view_form
+msgid "Générer le contrat et la liste de prix"
+msgstr ""
+
+#. module: tenders
+#: model:ir.module.category,description:sties_sub.module_category_tender_management
+msgid "Helps you handle your tenders."
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__id
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__id
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz__id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_lost__id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__id
+msgid "ID"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Internal Notes"
+msgstr "Notes internes"
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_account_invoice
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Ligne de facture"
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:311
+#: code:addons/sties_sub/models/tender_contract.py:268
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__qty_invoiced
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__qty_invoiced
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+#, python-format
+msgid "Invoiced Quantity"
+msgstr "Qté facturée"
+
+#. module: tenders
+#: code:addons/sties_sub/models/tender_contract.py:82
+#, python-format
+msgid "Is not possible to duplicate the record, please create a new one"
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:333
+#: code:addons/sties_sub/models/tender_contract.py:290
+#, python-format
+msgid "It is forbidden to modify the following fields in a locked order:\n"
+"%s"
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:106
+#, python-format
+msgid "La date de clôture est antérieure à la date de l'appel d'offre."
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:112
+#, python-format
+msgid "La date de clôture est antérieure à la date limite de participation."
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:76
+#, python-format
+msgid "La date de l'appel d'offre est ultérieure à la date de clôture."
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:70
+#, python-format
+msgid "La date de l'appel d'offre est ultérieure à la date limite de participation."
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:69
+#: code:addons/sties_sub/models/sties_sub.py:75
+#: code:addons/sties_sub/models/sties_sub.py:87
+#: code:addons/sties_sub/models/sties_sub.py:93
+#: code:addons/sties_sub/models/sties_sub.py:105
+#: code:addons/sties_sub/models/sties_sub.py:111
+#: code:addons/sties_sub/wizard/generate_contract.py:40
+#: code:addons/sties_sub/wizard/generate_contract.py:51
+#, python-format
+msgid "La date demandée est incorrecte."
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/wizard/generate_contract.py:41
+#, python-format
+msgid "La date début du contrat est ultérieure ou égale à la date fin."
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/wizard/generate_contract.py:52
+#, python-format
+msgid "La date fin du contrat est antérieure ou égale à la date début."
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:88
+#, python-format
+msgid "La date limite de participation est antérieure à la date de l'appel d'offre."
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:94
+#, python-format
+msgid "La date limite de participation est ultérieure à la date de clôture."
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines____last_update
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines____last_update
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz____last_update
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract____last_update
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line____last_update
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard____last_update
+#: model:ir.model.fields,field_description:sties_sub.field_tender_lost____last_update
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__write_uid
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__write_uid
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz__write_uid
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__write_uid
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__write_uid
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__write_uid
+#: model:ir.model.fields,field_description:sties_sub.field_tender_lost__write_uid
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__write_date
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__write_date
+#: model:ir.model.fields,field_description:sties_sub.field_generate_contract_wiz__write_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__write_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__write_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__write_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_lost__write_date
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: tenders
+#: selection:crm.lead,type:0
+msgid "Lead"
+msgstr "Piste"
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Piste/opportunité"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__tender_line_id
+msgid "Ligne de l'appel d\\offre"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_line_wizard_form
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_line_wizard_tree
+msgid "Lignes"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,help:sties_sub.field_tender_line__order_partner_id
+msgid "Linked partner (optional). Usually created when converting the lead. You can find a partner by its Name, TIN, Email or Internal Reference."
+msgstr "Partenaire lié (optionnel). Généralement créé en convertisant la piste. Vous pouvez trouver un partenaire par son Nom, TIN, courriel ou Référence Interne."
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Liste de prix"
+msgstr ""
+
+#. module: tenders
+#: model:ir.actions.act_window,name:sties_sub.tender_lost_action
+#: model:ir.model.fields,field_description:sties_sub.field_tender_lost__lost_reason_id
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_lost_view_form
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+msgid "Lost Reason"
+msgstr "Motif de la perte"
+
+#. module: tenders
+#: model:res.groups,name:sties_sub.group_tender_manager
+msgid "Manager"
+msgstr "Gestionnaire"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Mettre à jour"
+msgstr ""
+
+#. module: tenders
+#: sql_constraint:contract.lines:0
+msgid "Missing required fields on accountable sale order line."
+msgstr ""
+
+#. module: tenders
+#: sql_constraint:tender.line:0
+msgid "Missing required fields on accountable tender line."
+msgstr ""
+
+#. module: tenders
+#: selection:crm.lead,state:0
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: selection:tender.line,state:0
+msgid "Non Retenu"
+msgstr ""
+
+#. module: tenders
+#: selection:contract.lines,display_type:0
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: selection:tender.line,display_type:0
+msgid "Note"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__description
+msgid "Notes"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Nouvelle commande"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__contract_number
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__contract_number
+msgid "Number of Contracts"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__sale_number
+msgid "Number of Quotations"
+msgstr "Nombre de devis"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "N° Appel d'offre"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "N° contrat"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_tree_view_tender
+msgid "Opportunities"
+msgstr "Opportunités"
+
+#. module: tenders
+#: selection:crm.lead,type:0
+msgid "Opportunity"
+msgstr "Opportunité"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__order_line
+msgid "Order Lines"
+msgstr "Lignes de la commande"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Order Number"
+msgstr "N° de commande"
+
+#. module: tenders
+#: code:addons/sties_sub/models/tender_contract.py:264
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__product_uom_qty
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__product_uom_qty
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+#, python-format
+msgid "Ordered Quantity"
+msgstr "Quantité commandée"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__order_ids
+msgid "Orders"
+msgstr "Commandes"
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_tender_partial_won
+msgid "Partial Won"
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/wizard/tender_partial_won.py:84
+#, python-format
+msgid "Partial won"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__tender_line
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__contract_extra_lines
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__contract_lines
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__tender_lines
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_partial_won_view_form
+msgid "Participations"
+msgstr ""
+
+#. module: tenders
+#: selection:crm.lead,state:0
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+#: selection:tender.line,state:0
+msgid "Partiellement Retenu"
+msgstr ""
+
+#. module: tenders
+#: model:ir.actions.act_window,name:sties_sub.tender_partial_won_action
+msgid "Partiellement retenu"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+msgid "Perdu"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__price_reduce
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__price_reduce
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__price_reduce
+msgid "Price Reduce"
+msgstr "Réduction de Prix"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__price_reduce_taxexcl
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__price_reduce_taxexcl
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__price_reduce_taxexcl
+msgid "Price Reduce Tax excl"
+msgstr "Remise HT"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__price_reduce_taxinc
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__price_reduce_taxinc
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__price_reduce_taxinc
+msgid "Price Reduce Tax inc"
+msgstr "Remise TTC"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__pricelist_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__pricelist_id
+msgid "Pricelist"
+msgstr "Liste de prix"
+
+#. module: tenders
+#: model:ir.model.fields,help:sties_sub.field_crm_lead__pricelist_id
+msgid "Pricelist for current sales order."
+msgstr "Liste de prix du bon de commande actuel"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__product_id
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__product_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__product_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__product_id
+msgid "Product"
+msgstr "Article"
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:307
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__product_uom_qty
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#, python-format
+msgid "Quantité"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__product_uom_qty
+msgid "Quantité du contrat"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__won_uom_qty
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__won_product_uom_qty
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Quantité retenue"
+msgstr ""
+
+
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Remettre enbrouillon"
+msgstr ""
+
+#. module: tenders
+#: selection:crm.lead,state:0
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+#: selection:tender.line,state:0
+msgid "Retenu"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_sale_order
+msgid "Sale Order"
+msgstr "Bon de commande"
+
+#. module: tenders
+#: model:ir.actions.act_window,name:sties_sub.sale_action_orders_from_contract
+msgid "Sale orders"
+msgstr "Bons de commande"
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bons de commande"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__salesman_id
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__salesman_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__user_id
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__salesman_id
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+msgid "Salesperson"
+msgstr "Vendeur"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_sale_contract_tenders_filter
+msgid "Search Leads"
+msgstr "Rechercher des pistes"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+msgid "Search Tenders"
+msgstr ""
+
+#. module: tenders
+#: selection:contract.lines,display_type:0
+#: selection:tender.line,display_type:0
+msgid "Section"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Section Name (eg. Products, Services)"
+msgstr "Nom de section (e.g. Articles, Services)"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_partial_won_view_form
+msgid "Selection"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_partial_won_view_form
+msgid "Selection Partial won"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+msgid "Sent"
+msgstr "Envoyé"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__sequence
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__sequence
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_sale_contract_tenders_filter
+msgid "State"
+msgstr "État"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__state
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__state
+msgid "Status"
+msgstr "État"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_lost_view_form
+msgid "Submit"
+msgstr "Soumettre"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__price_subtotal
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__price_subtotal
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__price_subtotal
+msgid "Subtotal"
+msgstr "Sous-total"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Suspendre"
+msgstr ""
+
+#. module: tenders
+#: selection:contract.lines,state:0
+#: selection:tender.contract,state:0
+msgid "Suspendu"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Tax"
+msgstr "Taxe"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Tax Excluded"
+msgstr "Taxes exclues"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__tax_id
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__tax_id
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__amount_tax
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__amount_tax
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__tax_id
+msgid "Taxes"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,help:sties_sub.field_contract_lines__display_type
+#: model:ir.model.fields,help:sties_sub.field_tender_line__display_type
+msgid "Technical field for UX purpose."
+msgstr "Champ technique utilisé à des fins ergonomiques"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__lead_id
+msgid "Tender"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_crm_case_tenders_filter
+msgid "Tender Date"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_tender_line
+msgid "Tender Line"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_tender_line_wizard
+msgid "Tender Line Wizard"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_tender_contract
+msgid "Tender contract"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model,name:sties_sub.model_contract_lines
+msgid "Tender contract Line"
+msgstr ""
+
+#. module: tenders
+#: model:ir.module.category,name:sties_sub.module_category_tender_management
+msgid "Tenders"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_form_view_tender
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Tenders Lines"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,help:sties_sub.field_tender_contract__analytic_account_id
+msgid "The analytic account related to a contract."
+msgstr ""
+
+#. module: tenders
+#: sql_constraint:tender.contract:0
+msgid "The name of the contract must be unique per company !"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__price_total
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__price_total
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__amount_total
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__amount_total
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__price_total
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Total"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__price_tax
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__price_tax
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__price_tax
+msgid "Total Tax"
+msgstr "Total des taxes"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Total Tax Included"
+msgstr "Total taxes incluses"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__type
+msgid "Type"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,help:sties_sub.field_crm_lead__type
+msgid "Type is used to separate Leads and Opportunities"
+msgstr "Le type est utilisé pour différencier les pistes des opportunités"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__price_unit
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__price_unit
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__price_unit
+msgid "Unit Price"
+msgstr "Prix unitaire"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__product_uom
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__product_uom
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line__product_uom
+#: model:ir.model.fields,field_description:sties_sub.field_tender_line_wizard__product_uom
+msgid "Unit of Measure"
+msgstr "Unité de mesure"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.crm_case_kanban_view_tenders
+msgid "Unread Messages"
+msgstr "Messages non lus"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_crm_lead__amount_untaxed
+#: model:ir.model.fields,field_description:sties_sub.field_tender_contract__amount_untaxed
+msgid "Untaxed Amount"
+msgstr "Montant HT"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__untaxed_amount_to_invoice
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__untaxed_amount_to_invoice
+msgid "Untaxed Amount To Invoice"
+msgstr "Montant hors-taxe à facturer"
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_extra_lines__untaxed_amount_invoiced
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__untaxed_amount_invoiced
+msgid "Untaxed Invoiced Amount"
+msgstr "Montant facturé non-taxé"
+
+#. module: tenders
+#: model:res.groups,name:sties_sub.group_tender_user
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_partial_won_view_form
+msgid "Validate"
+msgstr "Valider"
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "Vente hors contrat"
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:156
+#, python-format
+msgid "Veuillez ajouter au moins une ligne à l'appel d'offre."
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.generate_contract_view_form
+msgid "Veuillez saisir les détails du contrat :"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.tender_partial_won_view_form
+msgid "Veuillez séléctionner les lignes retenues de l'appel d'offre :"
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:205
+#, python-format
+msgid "Vous ne pouvez supprimer que les appels d'offres à l'état brouillon ou annulé."
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:436
+#: code:addons/sties_sub/models/tender_contract.py:426
+#, python-format
+msgid "Warning for %s"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_contract_lines__won_uom_qty
+msgid "Won Quantity"
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/tender_contract.py:475
+#, python-format
+msgid "You can not remove an order line once the sales order is confirmed.\n"
+"You should rather set the quantity to 0."
+msgstr ""
+
+#. module: tenders
+#: code:addons/sties_sub/models/sties_sub.py:484
+#, python-format
+msgid "You can not remove an tender line once the tender is confirmed.\n"
+"You should rather set the quantity to 0."
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.view_sale_contract_tenders_filter
+msgid "client"
+msgstr ""
+
+#. module: tenders
+#: model_terms:ir.ui.view,arch_db:sties_sub.form_view_contract_tender
+msgid "contrats"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__generated_lines
+msgid "field used for technical purpose"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__tender_lines_
+msgid "used for technical purpose"
+msgstr ""
+
+#. module: tenders
+#: model:ir.model.fields,field_description:sties_sub.field_tender_partial_won__tender_lines
+msgid "profitability"
+msgstr "rentabilité"

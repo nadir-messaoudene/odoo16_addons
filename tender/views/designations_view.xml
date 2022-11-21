@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="designation_list_action" model="ir.actions.act_window">
+            <field name="name">Designation lists</field>
+            <field name="res_model">designation.list</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <menuitem
+                id="menu_designation_list"
+                action="designation_list_action"
+                name="Designation lists"
+                parent="sties_tenders_menu_config"
+                sequence="1"/>
+
+    </data>
+</odoo>

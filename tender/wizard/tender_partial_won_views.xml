@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="tender_line_wizard_tree" model="ir.ui.view">
+        <field name="name">tender.line.wizard.tree</field>
+        <field name="model">tender.line.wizard</field>
+        <field name="arch" type="xml">
+            <tree string="Lignes">
+                <field name="name" readonly="1" />
+                <field name="product_id" readonly="1" />
+                <field name="product_uom_qty" readonly="1" />
+                <field name="won_product_uom_qty"/>
+                <field name="product_uom" readonly="1" />
+                <field name="tender_line_id"  invisible ="1"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="tender_line_wizard_form" model="ir.ui.view">
+        <field name="name">tender.line.wizard.form</field>
+        <field name="model">tender.line.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Lignes">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product_id" readonly="1" />
+                        </group>
+                        <group>
+                        </group>
+                        <group>
+                            <field name="product_uom_qty" readonly="1"/>
+                            <field name="won_product_uom_qty"/>
+                        </group>
+                        <group>
+                            <field name="product_uom" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+        
+    <record id="tender_partial_won_view_form" model="ir.ui.view">
+        <field name="name">tender.partial.won.form</field>
+        <field name="model">tender.partial.won</field>
+        <field name="arch" type="xml">
+            <form string="Selection Partial won">
+                <sheet>
+                    
+                    <field name="tender_lines_" invisible ="1"/>
+                    <field name="lead_id" invisible ="1"/>
+                    <field name="generated_lines" invisible ="1"/>
+                    <button name="generate_lines_buttom" string="Génération des lignes de l'appel d'offre" type="object" class="btn-primary" attrs="{'invisible': [('generated_lines', '=', True)]}"/>
+                    <div attrs="{'invisible': [('generated_lines', '=', False)]}">
+                        <p>
+                            Veuillez séléctionner les lignes retenues de l'appel d'offre :  
+                        </p>
+                        <group>
+                            <notebook>
+                                <page string="Participations" name="tender_line" > 
+                                    <field  name="tender_lines" options="{'no_create': True}" >
+                                        <tree string="Selection" editable="bottom">
+                                            <field name="product_id"/>
+                                            <field name="name"/>
+                                            <field name="product_uom_qty"/>
+                                            <field name="won_product_uom_qty"/>
+                                            <field name="product_uom"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                    </div>
+                    <footer>
+                        <button name="action_partial_won_apply" string="Validate" type="object" class="btn-primary" 
+                        attrs="{'invisible': ['|',('generated_lines', '=', False),('tender_lines','=',[])]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tender_partial_won_action" model="ir.actions.act_window">
+        <field name="name">Partiellement retenu</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tender.partial.won</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="tender_partial_won_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>
+
+

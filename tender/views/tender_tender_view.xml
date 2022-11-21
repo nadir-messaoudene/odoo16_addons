@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_action_contract" model="ir.actions.act_window">
+            <field name="name">Contrats</field>
+            <field name="res_model">tender.contract</field>
+            <field name="search_view_id" ref="view_sale_contract_tenders_filter"/>
+            <field name="domain">[('lead_id', '=', active_id)]</field>
+            <field name="context">{'search_default_lead_id': [active_id], 'default_lead_id': active_id}</field>
+        </record>
+
+        <record id="crm_case_form_view_tender" model="ir.ui.view">
+            <field name="name">crm.lead.form.tender</field>
+            <field name="model">crm.lead</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <form string="Appels d'offres" class="o_opportunity_form">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" states="draft"
+                                groups="tender.group_confirm_tender"/>
+                        <button name="action_sent" string="Sent" type="object" class="oe_highlight" states="confirmed"
+                                groups="tender.group_tender_manager"/>
+                        <button name="action_won" string="Retenu" type="object" class="oe_highlight" states="sent"
+                                groups="tender.group_tender_manager"/>
+                        <button name="%(tender_partial_won_action)d" string="Partiellement Retenu" type="action"
+                                class="oe_highlight" context="{'default_lead_id': active_id}" states="sent"
+                                groups="tender.group_tender_manager"/>
+                        <button name="%(tender_lost_action)d" string="Non Retenu" type="action"
+                                context="{'default_lead_id': active_id}" states="sent"
+                                groups="tender.group_tender_manager"/>
+                        <button name="%(tender_lost_action_)d" string="Motif de la perte" type="action"
+                                context="{'default_lead_id': active_id}"
+                                attrs="{'invisible': ['|',('lost_reason_id', '!=', False),('state', '!=', 'lost')]}"
+                                groups="tender.group_tender_manager"/>
+                        <button name="action_cancel" string="Annuler" type="object" states="draft,confirmed"
+                                groups="tender.group_tender_manager"/>
+                        <button name="set_draft" string="Remettre enbrouillon " type="object" states="cancel"
+                                groups="tender.group_tender_manager"/>
+                        <button name="%(generate_contract_view_action)d"
+                                string="Génération du contrat et liste de prix"
+                                type="action"
+                                class="oe_highlight"
+                                context="{'default_lead_id': active_id}"
+                                groups="tender.group_tender_manager"
+                                attrs="{'invisible': ['|',('contract_number', '>', 0),('state', 'not in', ['won','partial_won'])]}"
+                        />
+                        <field name="state" widget="statusbar" attrs="{'invisible': [('active', '=', False)]}"/>
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <field name="contract_number" invisible="1"/>
+                        <div class="oe_button_box" name="button_box"
+                             attrs="{'invisible': [('state', 'not in', ['won','partial_won'])]}">  <!-- attrs="{'invisible': [('contract_number', '=', 0)]}" -->
+                            <button class="oe_stat_button" type="action"
+                                    name="%(sale_action_contract)d" icon="fa-pencil-square-o"
+                                    context="{'default_partner_id': partner_id, 'search_default_draft': 1, 'search_default_sent': 1}">
+                                <div class="o_stat_info">
+                                    <field name="contract_number" class="o_stat_value"/>
+                                    <span class="o_stat_text">Contrat(s)</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="badge-pill badge-danger float-right"
+                             attrs="{'invisible': [('state', '!=', 'lost')]}">Perdu
+                        </div>
+                        <div class="badge-pill badge-success float-right"
+                             attrs="{'invisible': [('state', '!=', 'won')]}">Retenu
+                        </div>
+                        <div class="badge-pill badge-success float-right"
+                             attrs="{'invisible': [('state', '!=', 'partial_won')]}">Partiellement Retenu
+                        </div>
+                        <div class="oe_title" attrs="{'invisible': [('tender_type', '=', 'AO')]}">
+                            <label for="name" string="Consultation" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" string="Consultation" placeholder="N° "
+                                       attrs="{'readonly': [('type', '=', 'tenders'),('state', 'in', ['confirmed','sent','won','partial_won','lost','cancel'])]}"/>
+                            </h1>
+                        </div>
+                        <div class="oe_title" attrs="{'invisible': [('tender_type', '=', 'consultation')]}">
+                            <label for="name" string="Appel d'offre" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" string="Appel d'offre" placeholder="N° "
+                                       attrs="{'readonly': [('type', '=', 'tenders'),('state', 'in', ['confirmed','sent','won','partial_won','lost','cancel'])]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"
+                                       required="1"
+                                       options="{'no_create': True}"
+                                       widget="res_partner_many2one"
+                                       string="Client" domain="[('customer_rank', '=', 1)]"
+                                       attrs="{'readonly': [('type', '=', 'tenders'),('state', 'in', ['confirmed','sent','won','partial_won','lost','cancel'])]}"
+                                       context="{'search_default_customer': 1,'show_vat': True}"/>
+                                <field name="type" invisible="1"/>
+                                <field name="date_order" attrs="{'required': [('type', '=', 'tenders')]}"/>
+                                <field name="company_id"
+                                       options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="pricelist_id" string="Liste de prix" invisible="0"/>
+                                <field name="date_deadline" string="Date limite participation"
+                                       attrs="{'readonly': [('type', '=', 'tenders'),('state', 'in', ['confirmed','sent','won','partial_won','lost','cancel'])]}"/>
+                                <field name="date_closed_tender"/>
+                            </group>
+                            <group>
+                                <field name="tender_type"/>
+                                <field name="user_id" string="Vendeur"
+                                       context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'sales_team.group_sale_salesman_all_leads'], 'team_id': team_id}"
+                                       domain="[('share', '=', False)]"
+                                       attrs="{'readonly': [('type', '=', 'tenders'),('state', 'in', ['confirmed','sent','won','partial_won','lost','cancel'])]}"/>
+                                <field name="team_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="contract_type"
+                                       attrs="{'invisible': [('tender_type', '=', 'consultation')], 'required': [('tender_type', '=', 'AO')]}"/>
+                                <field name="contract_length"
+                                       attrs="{'invisible': [('tender_type', '=', 'consultation')], 'required': [('tender_type', '=', 'AO')]}"/>
+                                <!-- <field name="priority" widget="priority" string="Priorité"/> -->
+                                <field name="currency_id" invisible="1"/>
+                                <field name="lost_reason_id" string="Motifs de la perte"
+                                       attrs="{'invisible': [('state', '!=', 'lost')]}"
+                                       readonly="1"/> <!--  domain="[('type','=','AO')]" -->
+                                <field name="company_currency" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Participation" name="tender_lines">
+                                <field
+                                        name="tender_line"
+                                        widget="section_and_note_one2many"
+                                        mode="tree">
+                                    <form>
+                                        <field name="display_type" invisible="1"/>
+                                        <!--
+                                            We need the sequence field to be here for new lines to be added at the correct position.
+                                            TODO: at some point we want to fix this in the framework so that an invisible field is not required.
+                                        -->
+                                        <field name="sequence" invisible="1"/>
+                                        <group>
+                                            <group attrs="{'invisible': [('display_type', '!=', False)]}">
+                                                <field name="product_updatable" invisible="1"/>
+                                                <field name="product_id"
+                                                       attrs="{'required': [('display_type', '=', False)]}"
+                                                       force_save="1"
+                                                />
+                                                <field name="price_total" invisible="1"/>
+                                                <field name="price_tax" invisible="1"/>
+                                                <field name="price_subtotal" invisible="1"/>
+                                                <label for="product_uom_qty" string="Quantité"/>
+                                                <!-- <field name="won_uom_qty" attrs="{'invisible': [('parent.state', 'not in', ['won', 'partial_won'])]}"/> -->
+                                                <div>
+                                                    <field
+                                                            name="product_uom_qty" string="Quantité"
+                                                            class="oe_inline"/>
+                                                    <field
+                                                            name="product_uom"
+                                                            force_save="1"
+                                                            groups="uom.group_uom"
+                                                            class="oe_inline oe_no_button"
+                                                            attrs="{'required': [('display_type', '=', False)]}"
+                                                    />
+                                                </div>
+                                                <field name="min_uom_qty"/>
+                                                <field name="max_uom_qty"/>
+                                                <field name="price_unit"/>
+                                                <label for="discount" groups="product.group_discount_per_so_line"/>
+                                                <div name="discount" groups="product.group_discount_per_so_line">
+                                                    <field name="discount" class="oe_inline"/>
+                                                    %%
+                                                </div>
+                                                <!--
+                                                    We need the sequence field to be here
+                                                    because we want to be able to overwrite the default sequence value in the JS
+                                                    in order for new lines to be added at the correct position.
+                                                    NOTE: at some point we want to fix this in the framework so that an invisible field is not required.
+                                                -->
+                                                <field name="sequence" invisible="1"/>
+                                            </group>
+                                            <group attrs="{'invisible': [('display_type', '!=', False)]}">
+                                                <field name="invoicing"/>
+                                                <field name="pattern_not_invoicing"
+                                                       attrs="{'required': [('invoicing', '=', 'do_not_invoice')],'readonly': [('invoicing', '=', 'to_invoice')], 'invisible': [('invoicing', '=', 'to_invoice')]}"/>
+                                                <field name="is_reactif_dedie"
+                                                       attrs="{'invisible': [('is_reactif_dedie', '=', False)]}"
+                                                       readonly="0"/>
+                                                <field name="is_reactif_manuel"
+                                                       attrs="{'invisible': [('is_reactif_manuel', '=', False)]}"
+                                                       readonly="0"/>
+                                                <field name="standard_ids" widget="many2many_tags"
+                                                       attrs="{'invisible': [('is_reactif_dedie', '=', False),('is_reactif_manuel', '=', False)]}"
+                                                       readonly="1"/>
+                                                <field name="tax_id"
+                                                       widget="many2many_tags"
+                                                       options="{'no_create': True}"
+                                                       context="{'search_view_ref': 'account.account_tax_view_search'}"
+                                                       domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
+                                                />
+                                                <label for="won_uom_qty" string="Quantité retenue"
+                                                       attrs="{'invisible': [('parent.state', 'not in', ['won', 'partial_won'])]}"/>
+                                                <div attrs="{'invisible': [('parent.state', 'not in', ['won', 'partial_won'])]}">
+                                                    <field name="won_uom_qty"
+                                                           class="oe_inline"/>
+                                                    <field name="product_uom"
+                                                           force_save="1"
+                                                           groups="uom.group_uom"
+                                                           class="oe_inline oe_no_button"
+                                                           attrs="{'required': [('display_type', '=', False)]}"
+                                                    />
+                                                </div>
+                                                <field name="lost_reason_id"
+                                                       attrs="{'invisible': [('parent.state', 'not in', ['lost', 'partial_won'])]}"/>
+                                                <field name="code" invisible="1"/>
+                                                <field name="concurrent_price_unit"
+                                                       attrs="{'invisible': [('code', '!=', 'finance'),('lost_reason_id', '=', False)]}"/>
+                                                <field name="conditionnement"
+                                                       attrs="{'invisible': [('code', '!=', 'finance'),('lost_reason_id', '=', False)]}"/>
+                                            </group>
+                                        </group>
+                                        <label for="name" string="Description"
+                                               attrs="{'invisible': [('display_type', '!=', False)]}"/>
+                                        <label for="name" string="Section Name (eg. Products, Services)"
+                                               attrs="{'invisible': [('display_type', '!=', 'line_section')]}"/>
+                                        <label for="name" string="Note"
+                                               attrs="{'invisible': [('display_type', '!=', 'line_note')]}"/>
+                                        <field name="name"/>
+                                        <field name="state" invisible="1"/>
+                                    </form>
+                                    <tree string="Tenders Lines"
+                                          decoration-info="state=='confirmed'"
+                                          decoration-bf="state=='sent'"
+                                          decoration-success="state=='won'"
+                                          decoration-warning="state=='partial_won'"
+                                          decoration-muted="state == 'cancel'"
+                                          decoration-danger="state == 'lost'">
+                                        <control>
+                                            <create string="Add a product"/>
+                                            <create string="Configure a product"
+                                                    context="{'open_product_configurator': True}"
+                                                    groups="product.group_product_variant"/>
+                                            <create string="Add a section"
+                                                    context="{'default_display_type': 'line_section'}"/>
+                                            <create string="Add a note"
+                                                    context="{'default_display_type': 'line_note'}"/>
+                                        </control>
+                                        <field name="sequence" widget="handle"/>
+                                        <!-- We do not display the type because we don't want the user to be bothered with that information if he has no section or note. -->
+                                        <field name="display_type" invisible="1"/>
+                                        <field name="product_updatable" invisible="1"/>
+                                        <field
+                                                name="product_id"
+                                                attrs="{'required': [('display_type', '=', False)]}"
+                                                force_save="1"
+                                        />
+                                        <field name="name" widget="section_and_note_text"/>
+                                        <field
+                                                name="product_uom_qty"
+                                                string="Qté"
+                                        />
+                                        <field name="min_uom_qty"/>
+                                        <field name="max_uom_qty"/>
+                                        <field name="won_uom_qty"
+                                               attrs="{'column_invisible': [('parent.state', 'not in', ['won', 'partial_won'])]}"/>
+                                        <field
+                                                name="product_uom"
+                                                force_save="1"
+                                                attrs="{'required': [('display_type', '=', False)]}"
+                                                context="{'company_id': parent.company_id}"
+                                                groups="uom.group_uom"
+                                                options='{"no_open": True}'
+                                        />
+                                        <field name="price_unit"/>
+                                        <field name="invoicing"/>
+                                        <field name="pattern_not_invoicing" string="Motif de FAC NA"/>
+                                        <field name="lost_reason_id" string="Motif de la perte"
+                                               attrs="{'column_invisible': [('parent.state', 'not in', ['lost', 'partial_won'])]}"/>
+                                        <field
+                                                name="tax_id"
+                                                widget="many2many_tags"
+                                                options="{'no_create': True}"
+                                        />
+                                        <field name="discount" groups="product.group_discount_per_so_line"/>
+                                        <field name="price_subtotal" widget="monetary"
+                                               groups="account.group_show_line_subtotals_tax_excluded"/>
+                                        <field name="price_total" widget="monetary"
+                                               groups="account.group_show_line_subtotals_tax_included"/>
+                                        <field name="state" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="price_tax" invisible="1"/>
+                                        <!-- <button name="lost_pattern" string="Motif du refus" type="object" icon="fa-list" attrs="{'column_invisible': [('parent.state', 'not in', ['lost', 'partial_won'])]}"
+                                        options='{"warn": true}'/>  -->
+
+                                        <!-- <button name="%(tender_lost_action)d" string="Motif du refus" type="action"  icon="fa-list" context="{'default_lead_id': active_id}" attrs="{'column_invisible': [('parent.state', 'not in', ['lost', 'partial_won'])]}"/>  -->
+                                        <button name="%(tender_lost_action_from_line)d" icon="fa-list" type="action"
+                                                context="{'default_line_id': active_id}" string="1"
+                                                attrs="{'column_invisible': [('parent.lost_reason_id', '=', False)]}"/>
+                                        <!-- attrs="{'column_invisible': [('parent.state', 'not in', ['partial_won','lost']),('parent.lost_reason', '=', False)]}"/>
+                                                     -->
+                                        <button name="%(tender_lost_action_from_line_)d" icon="fa-list" type="action"
+                                                context="{'default_line_id': active_id}" string="2"
+                                                attrs="{'column_invisible': [('parent.state', '!=', 'partial_won')]}"/>
+
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <field name="amount_untaxed" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_tax" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="amount_total"/>
+                                    </div>
+                                    <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator"
+                                           widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </page>
+                            <page string="Equipments" name="equipment_id">
+                                <field
+                                        name="equipment_id" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                        widget="section_and_note_one2many"
+                                        mode="tree">
+                                    <form string="Machine Line">
+                                        <group>
+                                            <field name="product_id" string="Equipment"/>
+                                        </group>
+                                        <group>
+                                            <group>
+                                                <field name="standard_price" string="Coût"
+                                                       widget="monetary"/>
+                                                <field name="real_standard_price" string="Coût définitif"
+                                                       widget="monetary"/>
+                                                <field name="year_number" string="Nbr d'années"/>
+                                            </group>
+                                            <group>
+                                                <field name="depreciation" string="Amortissement annuel"
+                                                       widget="monetary"
+                                                       options="{'currency_field': 'currency_id'}"/>
+                                            </group>
+                                        </group>
+                                        <field name="name"/>
+                                    </form>
+                                    <tree string="Equipment Lines">
+                                        <field name="name" string="Description"/>
+                                        <field name="real_standard_price" string="Coût" widget="monetary"
+                                               options="{'currency_field': 'currency_id'}"/>
+                                        <field name="year_number" string="Nbr d'années" style="text-align: right"/>
+                                        <field name="depreciation" string="Amortissement" widget="monetary"
+                                               options="{'currency_field': 'currency_id'}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Profitability" groups="tender.group_show_profitability">
+                                <group>
+                                    <group string="Charges Directes">
+                                        <field name="annual_depreciation" string="Amortissement annuel"
+                                               widget="monetary"/>
+                                        <field name="global_cost" string="Cout de la marchandise" widget="monetary"/>
+                                        <field name="total_directe_charges" string="Total charges directes"
+                                               widget="monetary" style="color:blue ! important;"/>
+                                    </group>
+                                    <group>
+                                        <group string="Charges Indirectes">
+                                            <field name="indirect_cost" string="Couts indirectes" widget="monetary"
+                                                   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                            <field name="financial_charges" string="Charges financieres"
+                                                   widget="monetary" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                        </group>
+                                        <group string="Totaux">
+                                            <field name="exploitation_total_charges"
+                                                   string="Total charges d'exploitation"
+                                                   widget="monetary" style="color:blue ! important;"/>
+                                            <field name="global_charges" string="Total charges"
+                                                   widget="monetary" style="color:blue ! important;"/>
+                                        </group>
+                                    </group>
+                                    <group string="Chiffre d'affaire">
+                                        <field name="amount_untaxed" widget="monetary" style="color:red ! important;"/>
+                                    </group>
+                                    <group string="Marges">
+                                        <field name="exploitation_margin" string="Marge d'exploitation"
+                                               widget="monetary" style="color:green ! important;"/>
+                                        <field name="net_margin" string="Marge nette"
+                                               widget="monetary" style="color:green ! important;"/>
+                                    </group>
+                                    <group string="Ratios">
+                                        <field name="ratio_exploitation_margin" string="Ratio de marge d'expoitation"
+                                               widget="progressbar"/>
+                                        <field name="ratio_net_margin" string="Ratio de marge nette"
+                                               widget="progressbar"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Internal Notes">
+                                <group>
+                                    <field name="description"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="crm_case_tree_view_tender" model="ir.ui.view">
+            <field name="name">crm.lead.tree.tender</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <tree string="Opportunities"
+                      decoration-info="state=='confirmed'"
+                      decoration-bf="state=='sent'"
+                      decoration-success="state=='won'"
+                      decoration-warning="state=='partial_won'"
+                      decoration-muted="state == 'cancel'"
+                      decoration-danger="state == 'lost'">
+                    <field name="create_date" string="Crée le"/>
+                    <field name="name" string="Appel d'offre"/>
+                    <field name="partner_id" string="Client"/>
+                    <field name="date_order"/>
+                    <field name="date_deadline" string="Date limite participation"/>
+                    <field name="date_closed_tender"/>
+                    <field name="user_id" string="Vendeur"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="amount_total" widget="monetary"/>
+                    <field name="state" string="Statut"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="crm_case_tree_view_tender_consultation" model="ir.ui.view">
+            <field name="name">crm.lead.tree.tender</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <tree string="Opportunities"
+                      decoration-info="state=='confirmed'"
+                      decoration-bf="state=='sent'"
+                      decoration-success="state=='won'"
+                      decoration-warning="state=='partial_won'"
+                      decoration-muted="state == 'cancel'"
+                      decoration-danger="state == 'lost'">
+                    <field name="create_date" string="Crée le"/>
+                    <field name="name" string="Consultation"/>
+                    <field name="partner_id" string="Client"/>
+                    <field name="date_order"/>
+                    <field name="date_deadline" string="Date limite participation"/>
+                    <field name="date_closed_tender"/>
+                    <field name="user_id" string="Vendeur"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="amount_total" widget="monetary"/>
+                    <field name="state" string="Statut"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_crm_case_tenders_filter" model="ir.ui.view">
+            <field name="name">crm.lead.search.tender</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <search string="Search Tenders">
+                    <field name="name"
+                           filter_domain="['|','|','|',('partner_name', 'ilike', self),('email_from', 'ilike', self), ('contact_name', 'ilike', self), ('name', 'ilike', self)]"/>
+                    <field name="user_id" string="Vendeur"/>
+                    <field name="partner_id" operator="child_of" string="Client"/>
+                    <field name="create_date"/>
+                    <field name="lost_reason_id"/>
+                    <separator/>
+                    <filter string="Retenu" name="won" domain="[('state', '=', 'won')]"/>
+                    <filter string="Partiellement Retenu" name="won" domain="[('state', '=', 'partial_won')]"/>
+                    <filter string="Perdu" name="lost" domain="[('state', '=', 'lost')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Salesperson" name="salesperson" context="{'group_by':'user_id'}"/>
+                        <filter name="Statut" string="Statut" context="{'group_by':'state'}"/>
+                        <filter string="Lost Reason" name="lostreason" context="{'group_by':'lost_reason_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Creation Date" context="{'group_by':'create_date:month'}" name="month"/>
+                        <filter string="Date de l'appel d'offre" context="{'group_by':'date_order:month'}"
+                                name="month"/>
+                        <filter string="Date limite participation" name="date_deadline"
+                                context="{'group_by':'date_deadline'}"/>
+                        <filter string="Closed Date" name="date_closed_tender"
+                                context="{'group_by':'date_closed_tender'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="crm_case_kanban_view_tenders" model="ir.ui.view">
+            <field name="name">crm.lead.kanban.lead.tender</field>
+            <field name="model">crm.lead</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <!-- <kanban default_group_by="stage_id" class="o_kanban_small_column o_opportunity_kanban" on_create="quick_create" quick_create_view="crm.quick_create_opportunity_form" archivable="false"> -->
+                <kanban default_group_by="state" class="o_kanban_small_column o_opportunity_kanban" archivable="false">
+                    <!-- <field name="stage_id" options='{"group_by_tooltip": {"requirements": "Description", "legend_priority": "Use of stars"}}'/> -->
+                    <field name="state"/>
+                    <field name="color"/>
+                    <field name="priority"/>
+                    <field name="expected_revenue"/>
+                    <field name="kanban_state"/>
+                    <field name="activity_date_deadline"/>
+                    <field name="email_from"/>
+                    <field name="user_id"/>
+                    <field name="partner_email_update"/>
+                    <field name="message_needaction_counter"/>
+                    <field name="partner_id"/>
+                    <field name="activity_summary"/>
+                    <field name="active"/>
+                    <field name="company_currency"/>
+                    <field name="activity_state"/>
+                    <field name="activity_ids"/>
+                    <!-- <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}' sum_field="planned_revenue" help="This bar allows to filter the opportunities based on scheduled activities."/> -->
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
+                                <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown"
+                                       href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable">
+                                            <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                        </t>
+                                        <t t-if="widget.deletable">
+                                            <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                        </t>
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <div>
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div>
+                                        <field name="tag_ids" widget="many2many_tags"
+                                               options="{'color_field': 'color'}"/>
+                                    </div>
+                                    <div class="text-muted o_kanban_record_subtitle">
+                                        <t t-if="record.expected_revenue.raw_value">
+                                            <field name="expected_revenue" widget="monetary"
+                                                   options="{'currency_field': 'company_currency'}"/>
+                                            <span t-if="record.partner_id.value">,</span>
+                                        </t>
+                                        <span t-if="record.partner_id.value">
+                                            <t t-esc="record.partner_id.value"/>
+                                        </span>
+                                    </div>
+
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="priority" widget="priority" groups="base.group_user"/>
+                                            <t t-if="record.message_needaction_counter.raw_value">
+                                                <span role="alert" class='oe_kanban_mail_new' title='Unread Messages'>
+                                                    <i class='fa fa-comments' aria-label="Unread messages" role="img"/>
+                                                    <t t-raw="record.message_needaction_counter.raw_value"/>
+                                                </span>
+                                            </t>
+                                            <field name="activity_ids" widget="kanban_activity"/>
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)"
+                                                 t-att-title="record.user_id.value" t-att-alt="record.user_id.value"
+                                                 width="24" height="24" class="oe_kanban_avatar"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crm_lead_all_tenders">
+            <field name="name">Appels d'offres</field>
+            <field name="res_model">crm.lead</field>
+            <!-- <field name="view_mode">tree,form,kanban</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','tenders'),('tender_type','=','AO')]</field>
+            <field name="search_view_id" ref="view_crm_case_tenders_filter"/>
+            <field name="context">{
+                'default_type':'tenders',
+                'search_default_type': 'tenders',
+                'search_default_to_process':1,
+                'default_tender_type':'AO',
+                }
+            </field>
+        </record>
+
+        <!-- <record id="crm_lead_tenders_view_kanban" model="ir.actions.act_window.view"> to be rev
+            <field name="sequence" eval="0"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="crm_case_kanban_view_tenders"/>
+            <field name="act_window_id" ref="crm_lead_all_tenders"/>
+        </record> -->
+
+        <record id="crm_lead_all_tenders_view_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="crm_case_tree_view_tender"/>
+            <field name="act_window_id" ref="crm_lead_all_tenders"/>
+        </record>
+
+        <record id="crm_lead_all_tenders_view_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="crm_case_form_view_tender"/>
+            <field name="act_window_id" ref="crm_lead_all_tenders"/>
+        </record>
+
+        <menuitem id="sties_tenders_menu_tenders"
+                  name="Dossiers"
+                  parent="tender_management_menu_root"
+                  sequence="1"/>
+        <!-- name="Appels d'offres" Abonnements   -->
+        <menuitem
+                id="menu_sties_tenders_tenders"
+                name="Appels d'offres"
+                parent="sties_tenders_menu_tenders"
+                sequence="1"
+                action="crm_lead_all_tenders"/>
+
+        <record model="ir.actions.act_window" id="crm_lead_all_tenders_consultation">
+            <field name="name">Consultations</field>
+            <field name="res_model">crm.lead</field>
+            <!-- <field name="view_mode">tree,form,kanban</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','tenders'),('tender_type','=','consultation')]</field>
+            <field name="search_view_id" ref="view_crm_case_tenders_filter"/>
+            <field name="context">{
+                'default_type':'tenders',
+                'search_default_type': 'tenders',
+                'search_default_to_process':1,
+                'default_tender_type':'consultation',
+                }
+            </field>
+        </record>
+
+        <record id="crm_lead_all_tenders_view_tree_consultation" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="crm_case_tree_view_tender_consultation"/>
+            <field name="act_window_id" ref="crm_lead_all_tenders_consultation"/>
+        </record>
+
+        <record id="crm_lead_all_tenders_view_form_consultation" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="crm_case_form_view_tender"/>
+            <field name="act_window_id" ref="crm_lead_all_tenders_consultation"/>
+        </record>
+
+        <menuitem
+                id="menu_sties_tenders_tenders_consultation"
+                name="Consultations"
+                parent="sties_tenders_menu_tenders"
+                sequence="2"
+                action="crm_lead_all_tenders_consultation"/>
+
+    </data>
+</odoo> 

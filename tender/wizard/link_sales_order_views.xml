@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="link_sales_order_view_form" model="ir.ui.view">
+        <field name="name">link.sales.order.wiz.form</field>
+        <field name="model">link.sales.order.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Commendes du contrat">
+                <sheet>
+                    <div>
+                        <p>
+                            Veuillez selectionner les commandes a lier au contrat :
+                        </p>
+                        <!--                            <tree string="Sales Order" decoration-danger="(order_ids.contract_id &gt; 12)">-->
+                        <!--                                <field name="order_ids"/>-->
+                        <!--                            </tree>-->
+                        <tree string="Sales Order">
+                            <field name="order_ids"/>
+                        </tree>
+                    </div>
+                    <footer>
+                        <button name="action_link_sales_order" string="Lier des commandes" type="object"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="link_sales_order_view_action" model="ir.actions.act_window">
+        <field name="name">Commendes du contrat</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">link.sales.order.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="link_sales_order_view_form"/>
+        <field name="context">{'search_default_contract_id': active_id, 'default_contract_id': active_id}</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
+
+

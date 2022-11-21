@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="tender_lost_view_form" model="ir.ui.view">
+            <field name="name">tender.lost.form</field>
+            <field name="model">tender.lost</field>
+            <field name="arch" type="xml">
+                <form string="Lost Reason">
+                        <group>
+                            <field name="lost_reason_id" options="{'no_create': True}" domain="[('type','=','AO')]"/>
+                        </group>
+                    <footer>
+                        <button name="action_lost_reason_apply" string="Confirmer" type="object" class="btn-primary" 
+                                attrs="{'invisible': [('lost_reason_id', '=', False)]}"/>
+                        <button name="action_lost_reason_apply_without_reason" string="Confirmer sans motif" type="object" class="btn-primary" 
+                                attrs="{'invisible': [('lost_reason_id', '!=', False)]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="tender_lost_action" model="ir.actions.act_window">
+            <field name="name">Motif de la perte</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tender.lost</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="tender_lost_view_form"/>
+            <field name="target">new</field>
+        </record>
+        
+        <record id="tender_lost_view_form_" model="ir.ui.view">
+            <field name="name">tender.lost.form</field>
+            <field name="model">tender.lost</field>
+            <field name="arch" type="xml">
+                <form string="Lost Reason">
+                    <group>
+                        <field name="lost_reason_id" options="{'no_create': True}" domain="[('type','=','AO')]" required="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_lost_reason_apply" string="Confirmer" type="object" class="btn-primary" />
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="tender_lost_action_" model="ir.actions.act_window">
+            <field name="name">Motif de la perte</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tender.lost</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="tender_lost_view_form_"/>
+            <field name="target">new</field>
+        </record>
+        
+        <record id="tender_lost_view_form_from_line" model="ir.ui.view">
+            <field name="name">tender.lost.form</field>
+            <field name="model">tender.lost</field>
+            <field name="arch" type="xml">
+                <form string="Lost Reason">
+                   <group>
+                        <group >
+                            <field name="lost_reason_id" options="{'no_create': True}" domain="[('type','=','AO'),('code','in',['tech','finance','over'])]"  required="1"/>
+                            <field name="code" invisible="1"/>
+                        </group>
+                        <group >
+                             <field name="price_unit" attrs="{'invisible': [('code', '!=', 'finance')]}"/>
+                            <field name="conditionnement" attrs="{'invisible': [('code', '!=', 'finance')]}"/>
+                        </group>
+                    </group>
+    
+                    <footer>
+                        <button name="action_lost_reason_apply_from_line" string="Confirmer" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="tender_lost_action_from_line" model="ir.actions.act_window">
+            <field name="name">Motif de la perte</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tender.lost</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="tender_lost_view_form_from_line"/>
+            <field name="target">new</field>
+        </record>
+        
+        <record id="tender_lost_action_from_line_" model="ir.actions.act_window">
+            <field name="name">Motif de la perte</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tender.lost</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="tender_lost_view_form_from_line"/>
+            <field name="target">new</field>
+        </record>
+        
+</odoo>

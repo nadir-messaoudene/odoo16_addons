@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- CRM-related subtypes for messaging / Chatter -->
+        <record id="mt_tender_create" model="mail.message.subtype">
+            <field name="name">Appel d'offre crée</field>
+            <field name="hidden" eval="True"/>
+            <field name="res_model">crm.lead</field>
+            <field name="default" eval="False"/>
+            <field name="description">Appel d'offre crée</field>
+        </record>
+        
+        <record id="mt_tender_consultation_create" model="mail.message.subtype">
+            <field name="name">Consultation créée</field>
+            <field name="hidden" eval="True"/>
+            <field name="res_model">crm.lead</field>
+            <field name="default" eval="False"/>
+            <field name="description">Consultation créée</field>
+        </record>
+
+        
+        <record id="ao_lost_reason_001" model="crm.lost.reason">
+            <field name="name">Technique</field>
+            <field name="type">AO</field>
+            <field name="code">tech</field>
+        </record>
+        <record id="ao_lost_reason_002" model="crm.lost.reason">
+            <field name="name">Financier</field>
+            <field name="type">AO</field>
+            <field name="code">finance</field>
+        </record>
+        <record id="ao_lost_reason_003" model="crm.lost.reason">
+            <field name="name">Non soumis : délais non respecté</field>
+            <field name="type">AO</field>
+            <field name="code">other</field>
+        </record>
+        <record id="ao_lost_reason_004" model="crm.lost.reason">
+            <field name="name">Non soumis : Avis non consulté</field>
+            <field name="type">AO</field>
+            <field name="code">other</field>
+        </record>
+        <record id="ao_lost_reason_005" model="crm.lost.reason">
+            <field name="name">Différents motifs</field>
+            <field name="type">AO</field>
+            <field name="code">multi</field>
+        </record>
+        <record id="ao_lost_reason_006" model="crm.lost.reason">
+            <field name="name">Surestimation</field>
+            <field name="type">AO</field>
+            <field name="code">over</field>
+        </record>
+
+    </data>
+</odoo>

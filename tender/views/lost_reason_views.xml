@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crm.crm_lost_reason_action" model="ir.actions.act_window">
+            <field name="domain">[('type','!=','AO')]</field>
+            <field name="context">{'default_type':'CRM'}</field>
+        </record>
+
+        <record id="ao_lost_reason_action" model="ir.actions.act_window">
+            <field name="name">Motifs du refus</field>
+            <field name="res_model">crm.lost.reason</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','AO')]</field>
+            <field name="context">{'default_type':'AO'}</field>
+        </record>
+    </data>
+</odoo>

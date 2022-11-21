@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_action_orders_from_contract" model="ir.actions.act_window">
+        <field name="name">Sale orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="domain">[('contract_id', '=', active_id), ('state', 'not in', ('draft', 'sent', 'cancel'))]</field>
+        <field name="context">{'search_default_contract_id': [active_id], 'default_contract_id': active_id}</field>
+    </record>
+
+    <record id="sale_action_quotations_new_from_contract" model="ir.actions.act_window">
+        <field name="name">Bons de commandes</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">form,tree</field>
+        <field name="domain">[('contract_id', '=', active_id)]</field>
+        <field name="context">{'search_default_contract_id': active_id, 'default_contract_id': active_id}</field>
+    </record>
+
+    <record id="view_order_form_contract" model="ir.ui.view">
+        <field name="name">sale.order.form.contract</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="client_order_ref" position="replace">
+            </field>
+            <field name="partner_shipping_id" position="after">
+                <field name="lead_tender_id" groups="tender.group_tender_user"/>
+                <field name="contract_id" groups="tender.group_tender_user"/>
+                <field name="designation_list_id" groups="tender.group_tender_user"/>
+                <field name="client_order_ref" groups="tender.group_tender_user"/>
+            </field>
+        </field>
+    </record>
+
+        <record model="ir.ui.view" id="view_order_form_qty_invoiced_validated">
+        <field name="name">sale.order.invoice_qty</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree//field[@name='qty_invoiced']" position="after">
+                <field name="qty_invoiced_validated"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

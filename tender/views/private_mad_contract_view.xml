@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="form_view_contract_tender_private_mad" model="ir.ui.view">
+            <field name="name">tender.contract.private.mad.form</field>
+            <field name="model">tender.contract</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <form string="contrats" class="o_opportunity_form">
+                    <header>
+                        <button name="generate_pricelist" string="Générer la liste de prix" type="object" class="oe_highlight"
+                                attrs="{'invisible': ['|', ('pricelist_id', '!=', False),('state', '!=', 'draft')]}"
+                        />
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight"
+                                attrs="{'invisible': ['|', ('pricelist_id', '=', False),('state', '!=', 'draft')]}"
+                        />
+
+                        <button name="action_running" string="Démarrer" type="object" class="oe_highlight" states="confirmed" />
+
+                        <button string="Nouvelle commande" name="%(sale_action_quotations_new_from_contract)d" type="action" class="oe_highlight"
+                                attrs="{'invisible': ['|', ('state', '!=', 'running'), ('blocked', '=', True)]}"
+                                context="{'search_default_partner_id': partner_id,
+                                  'default_partner_id': partner_id,
+                                  'default_origin': name}"/>
+
+                        <button name="action_done" string="Clôturer" type="object" class="oe_highlight" states="running"  />
+                        <button name="action_suspended" string="Suspendre" type="object" class="oe_highlight" states="running"/>
+                        <button name="action_cancel" string="Annuler" type="object"  states="draft,confirmed" />
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <field name="blocked" invisible="1"/>
+                        <field name="contract_type" invisible="1"/>
+
+                        <div class="oe_title">
+                            <h1><field name="name" nolabel="1"  placeholder="N° contrat" attrs="{'readonly': [('state', '!=', 'draft')]}"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"  attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                       widget="res_partner_many2one"
+                                       string="Client"
+                                       context="{'search_default_customer': 1,
+                                        'show_vat': True,
+                                    }"/>
+                                <field name="company_id"    groups="base.group_multi_company"   options="{'no_create': True}"/>
+                                <field name="begin_date" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            </group>
+                            <group>
+                                <field name="pricelist_id" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                <field name="end_date" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                                <field name="signed_date" />
+                            </group>
+                            <group>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="contract_length"  attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+
+                                <field name="user_id" string="Vendeur" attrs="{'readonly': [('state', '!=', 'draft')]}"  />
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Participations" name="contract_lines">
+                                <field
+                                        name="contract_lines" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                        widget="section_and_note_one2many"
+                                        mode="tree" >
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="product_id"
+                                                       force_save="1"
+                                                />
+                                                <field name="price_total" invisible="1"/>
+                                                <field name="price_tax" invisible="1"/>
+                                                <field name="price_subtotal" invisible="1"/>
+                                                <label for="product_uom_qty"  string="Qté du contrat"/>
+                                                <div>
+                                                    <field
+                                                            name="product_uom_qty" class="oe_inline"/>
+                                                    <field
+                                                            name="product_uom"
+                                                            force_save="1"
+                                                            groups="uom.group_uom"
+                                                            class="oe_inline oe_no_button"
+                                                            attrs="{'readonly': [('state', 'in', ('sale', 'done', 'cancel'))]}"
+                                                    />
+                                                </div>
+                                                <label for="qty_delivered" string="Delivered Quantity" attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"/>
+                                                <div attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}">
+                                                    <field name="qty_delivered"/>
+                                                    <field
+                                                            name="product_uom"
+                                                            force_save="1"
+                                                            groups="uom.group_uom"
+                                                            class="oe_inline oe_no_button"
+                                                            attrs="{'readonly': [('state', 'in', ('sale', 'done', 'cancel'))]}"
+                                                    />
+                                                </div>
+
+                                                <label for="qty_invoiced" string="Qté facturée" attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"/>
+                                                <div attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}">
+                                                    <field name="qty_invoiced"/>
+                                                    <field
+                                                            name="product_uom"
+                                                            force_save="1"
+                                                            groups="uom.group_uom"
+                                                            class="oe_inline oe_no_button"
+                                                            attrs="{'readonly': [('state', 'in', ('sale', 'done', 'cancel'))]}"
+                                                    />
+                                                </div>
+                                            </group>
+                                            <group>
+                                                <field name="invoicing"/>
+                                                <field name="pattern_not_invoicing"
+                                                       attrs="{'required': [('invoicing', '=', 'do_not_invoice')],'readonly': [('invoicing', '=', 'to_invoice')], 'invisible': [('invoicing', '=', 'to_invoice')]}" />
+
+                                                <field name="is_reactif_dedie"  attrs="{'invisible': [('is_reactif_dedie', '=', False)]}" readonly="0"/>
+                                                <field name="is_reactif_manuel"  attrs="{'invisible': [('is_reactif_manuel', '=', False)]}"  readonly="0"/>
+                                                <field name="standard_ids"  widget="many2many_tags"
+                                                       attrs="{'invisible': [('is_reactif_dedie', '=', False),('is_reactif_manuel', '=', False)]}" readonly="1"/>
+
+                                                <field name="tax_id"
+                                                       widget="many2many_tags"
+                                                       options="{'no_create': True}"
+                                                       context="{'search_view_ref': 'account.account_tax_view_search'}"
+                                                />
+
+                                                <field name="price_unit"/>
+                                                <label for="discount" groups="product.group_discount_per_so_line"/>
+                                                <div name="discount" groups="product.group_discount_per_so_line">
+                                                    <field name="discount" class="oe_inline"/> %%
+                                                </div>
+
+                                                <field
+                                                        name="subtotal_invoiced" string="Montant facturé"
+                                                        attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                                />
+                                                <field
+                                                        name="subtotal_to_invoice" string="Montant à facturer"
+                                                        attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                                />
+                                                <field
+                                                        name="subtotal_encours" string="Montant des encours"
+                                                        attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                                />
+
+                                                <label for="percentage_of_target" attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"/>
+                                                <div name="percentage_of_target" attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}">
+                                                    <field name="percentage_of_target" class="oe_inline"/> %%
+                                                </div>
+                                            </group>
+                                        </group>
+                                        <field name="name" invisible="1"/>
+                                        <field name="state" invisible="1"/>
+                                    </form>
+                                    <tree string="Tenders Lines">
+                                        <field
+                                                name="product_id"
+                                                force_save="1"
+                                        />
+                                        <field name="name" widget="section_and_note_text" invisible="1"/>
+                                        <field
+                                                name="product_uom_qty"
+                                                string="Qté du contrat"
+                                        />
+                                        <field name="won_uom_qty" attrs="{'column_invisible': [('parent.state', 'not in', ['won', 'partial_won'])]}"/>
+                                        <field
+                                                name="qty_delivered"
+                                                attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                        />
+                                        <field
+                                                name="qty_invoiced" string="Qté facturée"
+                                                attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                        />
+                                        <field
+                                                name="product_uom" string="UDM"
+                                                force_save="1"
+                                                attrs="{'readonly': [('state', 'in', ('sale','done', 'cancel'))]}"
+                                                groups="uom.group_uom"
+                                                options='{"no_open": True}'
+                                        />
+                                        <field name="invoicing"/>
+                                        <field name="pattern_not_invoicing" string="Motif de FAC NA"/>
+                                        <field name="price_unit" string="PU"/>
+                                        <field
+                                                name="subtotal_invoiced" string="M. facturé"
+                                                attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                        />
+                                        <field
+                                                name="subtotal_to_invoice" string="M. à facturer"
+                                                attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                        />
+                                        <field
+                                                name="subtotal_encours" string="M. encours"
+                                                attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                        />
+                                        <field
+                                                name="percentage_of_target" string="Pourcent / Obj(%)"
+                                                attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                        />
+                                        <field
+                                                name="tax_id"
+                                                widget="many2many_tags"
+                                                options="{'no_create': True}"
+                                        />
+                                        <field name="discount" groups="product.group_discount_per_so_line"/>
+                                        <field name="price_subtotal" widget="monetary" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                        <field name="price_total" widget="monetary" groups="account.group_show_line_subtotals_tax_included"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="price_tax" invisible="1"/>
+                                        <field name="state" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="amount_total" />
+                                    </div>
+                                    <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+
+                            </page>
+                            <page string="Bons de commandes">
+                                <field name="order_ids" widget="section_and_note_one2many" mode="tree">
+                                    <tree string="Bons de commandes"
+                                          decoration-info="invoice_status == 'to invoice'"
+                                          decoration-warning="invoice_status == 'do_not_invoice'"
+                                          decoration-success="invoice_status == 'invoiced'"
+                                          decoration-muted="state=='cancel'">
+                                        <field name="name" string="Numéro"/>
+                                        <field name="date_order" string="Confirmation Date"/>
+                                        <field name="commitment_date"/>
+                                        <field name="invoice_status"/>
+                                        <field name="state" invisible="1"/>
+                                        <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <!-- <field name="amount_to_invoice" sum="A facturer" widget="monetary"/> -->
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Factures">
+                                <field name="invoice_ids" widget="section_and_note_one2many" mode="tree">
+                                    <tree string="Factures">
+                                        <field name="sequence_number"/>
+                                        <field name="invoice_date"/>
+                                        <field name="invoice_date_due"/>
+                                        <field name="invoice_origin"/>
+                                        <field name="state"/>
+                                        <field name="amount_untaxed_signed" string="Tax Excluded" sum="Total"/>
+                                        <field name="amount_tax_signed" string="Tax" sum="Total"/>
+                                        <field name="amount_total_signed" string="Total" sum="Total"/>
+                                        <field name="amount_residual_signed" string="Amount Due" sum="Amount Due"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="company_currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Vente hors contrat" name="contract_extra_lines">
+                                <button name="action_generate_extra_lines" string="Mettre à jour" type="object" class="btn-primary"  groups="tender.group_tender_user"/>
+                                <field
+                                        name="contract_extra_lines"
+                                        widget="section_and_note_one2many"
+                                        mode="tree">
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="order_id"/>
+                                            </group>
+                                            <group>
+                                            </group>
+                                            <group>
+                                                <field name="product_id"/>
+                                                <field name="price_total" invisible="1"/>
+                                                <field name="price_tax" invisible="1"/>
+                                                <field name="price_subtotal" invisible="1"/>
+                                                <label for="product_uom_qty" string="Qté commandée"/>
+                                                <div>
+                                                    <field
+                                                            name="product_uom_qty" class="oe_inline"/>
+                                                    <field name="product_uom" force_save="1" groups="uom.group_uom" class="oe_inline oe_no_button"/>
+                                                </div>
+                                                <label for="qty_delivered" string="Delivered Quantity" attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"/>
+                                                <div attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}">
+                                                    <field name="qty_delivered" />
+                                                    <field name="product_uom" force_save="1" groups="uom.group_uom" class="oe_inline oe_no_button"/>
+                                                </div>
+                                                <label for="qty_invoiced"  string="Qté facturée" attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"/>
+                                                <div attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}">
+                                                    <field name="qty_invoiced" attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"/>
+                                                    <field name="product_uom" force_save="1" groups="uom.group_uom" class="oe_inline oe_no_button"/>
+                                                </div>
+                                            </group>
+                                            <group >
+                                                <field name="tax_id" widget="many2many_tags" options="{'no_create': True}"/>
+                                                <field name="price_unit"/>
+                                                <label for="discount" groups="product.group_discount_per_so_line"/>
+                                                <div name="discount" groups="product.group_discount_per_so_line">
+                                                    <field name="discount" class="oe_inline"/>
+                                                </div>
+
+                                                <field
+                                                        name="untaxed_amount_invoiced" string="Montant facturé"
+                                                        attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                                />
+                                                <!-- <field
+                                                    name="untaxed_amount_to_invoice" string="Montant à facturer"
+                                                    attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                                /> -->
+                                                <field
+                                                        name="subtotal_encours" string="Montant des encours"
+                                                        attrs="{'invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                                />
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="Lignes">
+                                        <field name="order_id" string="BC"/>
+                                        <field name="sequence" widget="handle" />
+                                        <field name="product_id"/>
+                                        <field name="product_uom_qty" string="Qté commandée"/>
+                                        <field name="qty_delivered" attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"/>
+                                        <field name="qty_invoiced"  string="Qté facturée" attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"/>
+                                        <field name="product_uom" force_save="1" string="UDM" groups="uom.group_uom"/>
+                                        <field name="price_unit" />
+                                        <field
+                                                name="untaxed_amount_invoiced" string="M. facturé"
+                                                attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                        />
+                                        <!-- <field
+                                            name="untaxed_amount_to_invoice" string="M. à facturer"
+                                            attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                        />-->
+                                        <field
+                                                name="subtotal_encours" string="M. encours"
+                                                attrs="{'column_invisible': [('parent.state', 'not in', ['running', 'done','suspended'])]}"
+                                        />
+                                        <field name="tax_id" widget="many2many_tags"/>
+                                        <field name="discount" groups="product.group_discount_per_so_line"/>
+                                        <field name="price_subtotal" sum="price_subtotal" widget="monetary" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                        <field name="price_tax" sum="price_tax" string="Total taxes"  widget="monetary"/>
+                                        <field name="price_total" sum="price_total" widget="monetary"/>
+                                        <field name="currency_id" invisible="1"/>
+
+
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Suivi contrat"  >
+                                <group>
+                                    <group string ="Total du contrat">
+                                        <field name="amount_total"  string="Total contrat" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    </group>
+                                    <group string ="Vente sous contrat">
+                                        <field name="amount_total_contract_invoiced" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <field name="amount_total_contract_to_invoice" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <field name="amount_total_contract_follow"  widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <label for="percentage_of_target" />
+                                        <div name="percentage_of_target">
+                                            <field name="percentage_of_target" class="oe_inline"/> %%
+                                        </div>
+                                    </group>
+                                    <group string ="Ventes hors contrat">
+                                        <field name="amount_total_hors_contract_invoiced"  widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <field name="amount_total_hors_contract_to_invoice" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <field name="amount_total_hors_contract_follow"  widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    </group>
+                                    <group string ="Toutes les ventes">
+                                        <field name="amount_total_invoiced"  widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <field name="amount_total_to_invoice" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <field name="amount_total_follow"  widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <label for="global_percentage_of_target"/>
+                                        <div name="global_percentage_of_target">
+                                            <field name="global_percentage_of_target" class="oe_inline"/> %%
+                                        </div>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Internal Notes">
+                                <field name="description"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="tree_view_contract_tender_private_mad" model="ir.ui.view">
+            <field name="name">tender.contract.private.mad.tree</field>
+            <field name="model">tender.contract</field>
+            <field name="arch" type="xml">
+                <tree  string="Contracts">
+                    <field name="name" string="Contract"/>
+                    <field name="partner_id"/>
+                    <field name="begin_date"/>
+                    <field name="end_date"/>
+                    <field name="signed_date"/>
+                    <field name="user_id"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="amount_total" widget="monetary"/>
+                    <field name="global_percentage_of_target"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <!-- <record id="view_tree_private_mad" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="tree_view_contract_tender_private_mad"/>
+            <field name="act_window_id" ref="all_contract_tenders_prived_mad"/>
+        </record>
+        <record id="view_form_private_mad" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="form_view_contract_tender_private_mad"/>
+            <field name="act_window_id" ref="all_contract_tenders_prived_mad"/>
+        </record>
+        
+        <menuitem
+            id="menu_sale_contract_tenders_prived_mad"
+            name="Contrats MAD privés"
+            parent="sale_menu_contract_tenders"
+            sequence="3"
+            action="all_contract_tenders_prived_mad"/>         -->
+
+        <record id="view_tree_private_mad" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="tree_view_contract_tender_private_mad"/>
+            <!-- <field name="act_window_id" ref="all_contract_tenders_prived_mad"/> -->
+        </record>
+        <record id="view_form_private_mad" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="form_view_contract_tender_private_mad"/>
+            <!-- <field name="act_window_id" ref="all_contract_tenders_prived_mad"/> -->
+        </record>
+
+        <!-- <menuitem
+            id="menu_sale_contract_tenders_prived_mad"
+            name="Contrats MAD privés"
+            parent="sale_menu_contract_tenders"
+            sequence="3"
+            action="all_contract_tenders_prived_mad"/> -->
+
+    </data>
+</odoo> 

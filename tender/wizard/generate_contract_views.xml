@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="generate_contract_view_form" model="ir.ui.view">
+        <field name="name">generate.contract.wiz.form</field>
+        <field name="model">generate.contract.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Détail du contrat">
+                    <div>
+                        <p>
+                            Veuillez saisir les détails du contrat :
+                        </p>
+                            <notebook>
+                                <page string="Contract details" name="contract_details" editable="bottom">
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+
+                                        </group>
+                                        <group>
+                                            <field name="begin_date"/>
+                                            <field name="end_date"/>
+                                            <field name="signed_date"/>
+                                        </group>
+                                    </group>
+                                </page>
+                            </notebook>
+                    </div>
+                    <footer>
+                        <button name="action_generate_contract" string="Générer le contrat et la liste de prix" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="generate_contract_view_action" model="ir.actions.act_window">
+        <field name="name">Détails du contrat</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">generate.contract.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="generate_contract_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>
+
+
