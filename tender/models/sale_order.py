@@ -55,12 +55,7 @@ class SaleOrderLine(models.Model):
             qty_invoiced_validated = 0.0
             for invoice_line in line.invoice_lines:
                 if invoice_line.move_id.state != 'cancel' and invoice_line.move_id.state != 'draft':
-                    if invoice_line.move_id.type == 'out_invoice':
-                        qty_invoiced_validated += invoice_line.uom_id._compute_quantity(invoice_line.quantity,
-                                                                                        line.product_uom)
-                    elif invoice_line.move_id.type == 'out_refund':
-                        qty_invoiced_validated -= invoice_line.uom_id._compute_quantity(invoice_line.quantity,
-                                                                                        line.product_uom)
+                    qty_invoiced_validated += invoice_line.quantity
             line.qty_invoiced_validated = qty_invoiced_validated
 
     @api.model

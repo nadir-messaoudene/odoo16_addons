@@ -15,8 +15,8 @@ class TenderContract(models.Model):
     _description = "Tender contract"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    equipment_id = fields.Many2many('equipment.template', string='Equipment', compute='_get_equipments', readonly=True,
-                                   help="Machines mises a dispositions relatif a l'appel d'offre.")
+    equipment_id = fields.One2many('equipment.template',string='Equipment', compute='_get_equipments', readonly=True,
+                                   help="Equipments mis a dispositions ou vendus relatif a l'appel d'offre.")
 
     designation_list_id = fields.Many2one('designation.list', string='designation list', compute='_get_designation',
                                           readonly=True,
@@ -192,7 +192,7 @@ class TenderContract(models.Model):
         self.exploitation_total_charges = self.total_directe_charges + self.tender_indirect_cost
 
     def _get_equipments(self):
-        self.equipment_id = self.env['equipment.template'].search([('tender_id', '=', self.id)])
+        self.equipment_id = self.env['equipment.template'].search([('tender_contract_id', '=', self.id)])
 
     def _get_designation(self):
         self.designation_list_id = self.env['designation.list'].search([('tender_id', '=', self.id)])

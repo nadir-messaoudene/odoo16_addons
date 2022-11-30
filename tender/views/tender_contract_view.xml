@@ -384,7 +384,7 @@
                                         class="btn-primary" groups="tender.group_tender_user"/>
                                 <field
                                         name="equipment_id"
-                                        attrs="{'readonly': [('state', '==', 'True')]}"
+                                        attrs="{'readonly': [('state', '!=', 'draft')]}"
                                         widget="section_and_note_one2many"
                                         mode="tree">
 
@@ -402,19 +402,16 @@
                                                 <field name="year_number" string="Nbr d'années"/>
                                             </group>
                                             <group>
-                                                <field name="depreciation" string="Depreciation" widget="monetary"
-                                                       options="{'currency_field': 'currency_id'}"/>
+                                                <field name="depreciation" string="Depreciation" widget="monetary"/>
                                             </group>
                                         </group>
                                         <field name="name"/>
                                     </form>
                                     <tree string="Equipment">
                                         <field name="name" string="Description"/>
-                                        <field name="real_standard_price" string="Coût" widget="monetary"
-                                               options="{'currency_field': 'currency_id'}"/>
+                                        <field name="real_standard_price" string="Coût" widget="monetary"/>
                                         <field name="year_number" string="Nbr d'années" style="text-align: right"/>
-                                        <field name="depreciation" string="Amortissement" widget="monetary"
-                                               options="{'currency_field': 'currency_id'}"/>
+                                        <field name="depreciation" string="Amortissement" widget="monetary"/>
                                     </tree>
                                 </field>
                             </page>

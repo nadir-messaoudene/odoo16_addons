@@ -14,5 +14,10 @@
             <field name="domain">[('type','=','AO')]</field>
             <field name="context">{'default_type':'AO'}</field>
         </record>
+        <menuitem
+                id="menu_ao_lost_reason"
+                action="ao_lost_reason_action"
+                parent="sties_tenders_menu_config"
+                sequence="1"/>
     </data>
 </odoo>
