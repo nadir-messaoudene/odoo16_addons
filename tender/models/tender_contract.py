@@ -252,9 +252,7 @@ class TenderContract(models.Model):
                 'amount_total_hors_contract_follow': amount_total_to_invoice_hors +
                                                      amount_total_invoiced_hors +
                                                      amount_total_invoiced_hors_validated,
-                'percentage_of_target_hors': 100 * (amount_total_to_invoice_hors +
-                                                    amount_total_invoiced_hors +
-                                                    amount_total_invoiced_hors_validated) / contract.amount_total
+                'percentage_of_target_hors': 100 * (amount_total_invoiced - amount_total_invoiced_hors_validated) / contract.amount_total
                 if contract.amount_total > 0.0 else 0.0,
 
                 'amount_total_contract_to_invoice': amount_total_to_invoice,
