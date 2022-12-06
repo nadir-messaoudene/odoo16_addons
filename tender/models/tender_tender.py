@@ -14,7 +14,8 @@ class LeadTender(models.Model):
                                   states={'draft': [('readonly', False)]}, copy=True, auto_join=True)
 
     # Equipment
-    equipment_id = fields.One2many('equipment.template', 'tender_id', string='Equipment')
+    equipment_id = fields.One2many('equipment.template', 'tender_id', string='Equipment',
+                                   help="Equipments mis a dispositions ou vendus relatif a l'appel d'offre.")
     annual_depreciation = fields.Float(compute='_get_annual_depreciation', readonly=True)
     global_cost = fields.Float(compute='_get_global_cost', readonly=True)
     # ===================================================================================================================

@@ -8,34 +8,9 @@
                 groups="group_tender_user,group_tender_manager"
                 sequence="6"/>
 
-        <menuitem id="sale_menu_contract_tenders"
-                  name="Conventions"
-                  parent="tender_management_menu_root"
-                  sequence="2"/>
-        <menuitem
-                id="menu_sale_contract_tenders"
-                name="Contrats AO"
-                parent="sale_menu_contract_tenders"
-                sequence="1"
-                action="all_contract_tenders"/>
-
-        <menuitem
-                id="menu_sale_contract_tenders_consultation"
-                name="Commandes des consultations"
-                parent="sale_menu_contract_tenders"
-                sequence="2"
-                action="all_contract_tenders_consultation"/>
-
-            <menuitem id="sties_tenders_menu_config"
+        <menuitem id="sties_tenders_menu_config"
                   name="Configuration"
                   parent="tender_management_menu_root"
                   sequence="3"/>
-
-        <menuitem
-                id="menu_ao_lost_reason"
-                action="ao_lost_reason_action"
-                parent="sties_tenders_menu_config"
-                sequence="1"/>
-
     </data>
 </odoo>

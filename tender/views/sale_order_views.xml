@@ -33,7 +33,7 @@
         </field>
     </record>
 
-        <record model="ir.ui.view" id="view_order_form_qty_invoiced_validated">
+    <record model="ir.ui.view" id="view_order_form_qty_invoiced_validated">
         <field name="name">sale.order.invoice_qty</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>

@@ -8,6 +8,83 @@ from odoo.addons import decimal_precision as dp
 class TenderLines(models.Model):
     _name = 'tender.line'
     _description = 'Tender Line'
+    tender_id = fields.Many2one('crm.lead', string='Appel d\offre', required=True, ondelete='cascade',
+                                index=True, copy=False)
+    name = fields.Text(string='Description', required=True)
+    sequence = fields.Integer(string='Sequence', default=10)
+    price_unit = fields.Float('Unit Price', required=True, digits=dp.get_precision('Product Price'), default=0.0)
+    price_subtotal = fields.Monetary(compute='_compute_amount', string='Subtotal', readonly=True, store=True)
+    price_tax = fields.Float(compute='_compute_amount', string='Total Tax', readonly=True, store=True)
+    price_total = fields.Monetary(compute='_compute_amount', string='Total', readonly=True, store=True)
+    price_reduce = fields.Float(compute='_get_price_reduce', string='Price Reduce',
+                                digits=dp.get_precision('Product Price'), readonly=True, store=True)
+    tax_id = fields.Many2many('account.tax', string='Taxes',
+                              domain=['|', ('active', '=', False), ('active', '=', True)])
+    price_reduce_taxinc = fields.Monetary(compute='_get_price_reduce_tax', string='Price Reduce Tax inc', readonly=True,
+                                          store=True)
+    price_reduce_taxexcl = fields.Monetary(compute='_get_price_reduce_notax', string='Price Reduce Tax excl',
+                                           readonly=True, store=True)
+    discount = fields.Float(string='Discount (%)', digits=dp.get_precision('Discount'), default=0.0)
+    product_id = fields.Many2one('product.product', string='Product', domain=[('sale_ok', '=', True)],
+                                 change_default=True, ondelete='restrict')
+    product_updatable = fields.Boolean(compute='_compute_product_updatable', string='Can Edit Product', readonly=True,
+                                       default=True)
+    product_uom_qty = fields.Float(string='Qté', digits=dp.get_precision('Product Unit of Measure'), required=True,
+                                   default=1.0)
+    won_uom_qty = fields.Float(string='Qté retenue', digits=dp.get_precision('Product Unit of Measure'))
+    min_uom_qty = fields.Float(string='Qté min', digits=dp.get_precision('Product Unit of Measure'))
+    max_uom_qty = fields.Float(string='Qté max', digits=dp.get_precision('Product Unit of Measure'))
+
+    product_uom = fields.Many2one('uom.uom', string='Unit of Measure')
+
+    salesman_id = fields.Many2one(related='tender_id.user_id', store=True, string='Salesperson', readonly=True)
+    company_id = fields.Many2one(related='tender_id.company_id', string='Company', store=True, readonly=True)
+    currency_id = fields.Many2one('res.currency', related='company_id.currency_id', string="Company Currency",
+                                  readonly=True)
+    order_partner_id = fields.Many2one(related='tender_id.partner_id', store=True, string='Customer', readonly=False)
+    display_type = fields.Selection([
+        ('line_section', "Section"),
+        ('line_note', "Note")], default=False, help="Technical field for UX purpose.")
+    state = fields.Selection([
+        ('draft', 'Brouillon'),
+        ('confirmed', 'Confirmé'),
+        ('sent', 'Envoyé'),
+        ('won', 'Retenu'),
+        ('partial_won', 'Partiellement Retenu'),
+        ('lost', 'Non Retenu'),
+        ('cancel', 'Annulé'),
+    ], string='Etat', readonly=True, copy=False, default='draft')
+
+    invoicing = fields.Selection([
+        ('to_invoice', 'Applicable'),
+        ('do_not_invoice', 'Non applicable')
+    ], string='Facturation', default='to_invoice')
+
+    pattern_not_invoicing = fields.Selection([
+        ('starter_kit', 'Kit de démarrage'),
+        ('mad', 'MAD'),
+        ('warranty', 'Garantie'),
+        ('loan_refund', 'Retour emprunt'),
+        ('replacement', 'Remplacement'),
+        ('commercial_gesture', 'Geste commercial'),
+        ('promotional_offer', 'Offre promotionnelle'),
+        ('std', 'Standard(s)'),
+        ('accessory', 'Accessoire(s)')
+    ], string='Motif de facturation non applicable', default='')
+
+    is_reactif_dedie = fields.Boolean(string='Réactif dédié')
+    is_reactif_manuel = fields.Boolean(string='Réactif manuel')
+    standard_ids = fields.Many2many('product.template', 'tender_line_reactif_standards_rel', 'reactif_id',
+                                    'standard_id', string='Standards',
+                                    domain=[('is_standard', '=', True)])
+
+    related_line_id = fields.Many2one('tender.line', string='Related line')
+
+    lost_reason_id = fields.Many2one('crm.lost.reason', string='Motifs du refus', index=True,
+                                     track_visibility='onchange')
+    code = fields.Char(string='code')
+    concurrent_price_unit = fields.Float('Prix concurrent', digits=dp.get_precision('Product Price'), default=0.0)
+    conditionnement = fields.Char(string='Conditionnement')
 
     @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id')
     def _compute_amount(self):
@@ -158,84 +235,6 @@ class TenderLines(models.Model):
         result = super(TenderLines, self).write(values)
         return result
 
-    tender_id = fields.Many2one('crm.lead', string='Appel d\offre', required=True, ondelete='cascade',
-                                index=True, copy=False)
-    name = fields.Text(string='Description', required=True)
-    sequence = fields.Integer(string='Sequence', default=10)
-    price_unit = fields.Float('Unit Price', required=True, digits=dp.get_precision('Product Price'), default=0.0)
-    price_subtotal = fields.Monetary(compute='_compute_amount', string='Subtotal', readonly=True, store=True)
-    price_tax = fields.Float(compute='_compute_amount', string='Total Tax', readonly=True, store=True)
-    price_total = fields.Monetary(compute='_compute_amount', string='Total', readonly=True, store=True)
-    price_reduce = fields.Float(compute='_get_price_reduce', string='Price Reduce',
-                                digits=dp.get_precision('Product Price'), readonly=True, store=True)
-    tax_id = fields.Many2many('account.tax', string='Taxes',
-                              domain=['|', ('active', '=', False), ('active', '=', True)])
-    price_reduce_taxinc = fields.Monetary(compute='_get_price_reduce_tax', string='Price Reduce Tax inc', readonly=True,
-                                          store=True)
-    price_reduce_taxexcl = fields.Monetary(compute='_get_price_reduce_notax', string='Price Reduce Tax excl',
-                                           readonly=True, store=True)
-    discount = fields.Float(string='Discount (%)', digits=dp.get_precision('Discount'), default=0.0)
-    product_id = fields.Many2one('product.product', string='Product', domain=[('sale_ok', '=', True)],
-                                 change_default=True, ondelete='restrict')
-    product_updatable = fields.Boolean(compute='_compute_product_updatable', string='Can Edit Product', readonly=True,
-                                       default=True)
-    product_uom_qty = fields.Float(string='Qté', digits=dp.get_precision('Product Unit of Measure'), required=True,
-                                   default=1.0)
-    won_uom_qty = fields.Float(string='Qté retenue', digits=dp.get_precision('Product Unit of Measure'))
-    min_uom_qty = fields.Float(string='Qté min', digits=dp.get_precision('Product Unit of Measure'))
-    max_uom_qty = fields.Float(string='Qté max', digits=dp.get_precision('Product Unit of Measure'))
-
-    product_uom = fields.Many2one('uom.uom', string='Unit of Measure')
-
-    salesman_id = fields.Many2one(related='tender_id.user_id', store=True, string='Salesperson', readonly=True)
-    company_id = fields.Many2one(related='tender_id.company_id', string='Company', store=True, readonly=True)
-    currency_id = fields.Many2one('res.currency', related='company_id.currency_id', string="Company Currency",
-                                  readonly=True)
-    order_partner_id = fields.Many2one(related='tender_id.partner_id', store=True, string='Customer', readonly=False)
-    display_type = fields.Selection([
-        ('line_section', "Section"),
-        ('line_note', "Note")], default=False, help="Technical field for UX purpose.")
-    state = fields.Selection([
-        ('draft', 'Brouillon'),
-        ('confirmed', 'Confirmé'),
-        ('sent', 'Envoyé'),
-        ('won', 'Retenu'),
-        ('partial_won', 'Partiellement Retenu'),
-        ('lost', 'Non Retenu'),
-        ('cancel', 'Annulé'),
-    ], string='Etat', readonly=True, copy=False, default='draft')
-
-    invoicing = fields.Selection([
-        ('to_invoice', 'Applicable'),
-        ('do_not_invoice', 'Non applicable')
-    ], string='Facturation', default='to_invoice')
-
-    pattern_not_invoicing = fields.Selection([
-        ('starter_kit', 'Kit de démarrage'),
-        ('mad', 'MAD'),
-        ('warranty', 'Garantie'),
-        ('loan_refund', 'Retour emprunt'),
-        ('replacement', 'Remplacement'),
-        ('commercial_gesture', 'Geste commercial'),
-        ('promotional_offer', 'Offre promotionnelle'),
-        ('std', 'Standard(s)'),
-        ('accessory', 'Accessoire(s)')
-    ], string='Motif de facturation non applicable', default='')
-
-    is_reactif_dedie = fields.Boolean(string='Réactif dédié')
-    is_reactif_manuel = fields.Boolean(string='Réactif manuel')
-    standard_ids = fields.Many2many('product.template', 'tender_line_reactif_standards_rel', 'reactif_id',
-                                    'standard_id', string='Standards',
-                                    domain=[('is_standard', '=', True)])
-
-    related_line_id = fields.Many2one('tender.line', string='Related line')
-
-    lost_reason_id = fields.Many2one('crm.lost.reason', string='Motifs du refus', index=True,
-                                     track_visibility='onchange')
-    code = fields.Char(string='code')
-    concurrent_price_unit = fields.Float('Prix concurrent', digits=dp.get_precision('Product Price'), default=0.0)
-    conditionnement = fields.Char(string='Conditionnement')
-
     def _get_display_price(self, product):
         if self.tender_id.pricelist_id.discount_policy == 'with_discount':
             return product.with_context(pricelist=self.tender_id.pricelist_id.id).price
@@ -290,22 +289,6 @@ class TenderLines(models.Model):
             result = {'warning': warning}
             if product.sale_line_warn == 'block':
                 self.product_id = False
-
-        # if self.product_id.is_reactif_dedie :
-        #     self.is_reactif_dedie =True
-        #     self.standard_ids = [(6,0,self.product_id.standard_ids.ids)]
-        #     self.is_reactif_manuel =False
-        # else :
-        #     self.is_reactif_dedie =False
-
-        # if self.product_id.is_reactif_manuel :
-        #     self.is_reactif_manuel =True
-        #     self.standard_ids = [(6,0,self.product_id.standard_ids.ids)]
-        #     self.is_reactif_dedie =False
-
-        # else :
-        #     self.is_reactif_manuel =False
-
         return result
 
     @api.onchange('product_uom', 'product_uom_qty')

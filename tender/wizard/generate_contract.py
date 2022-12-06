@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
-from odoo.addons import decimal_precision as dp
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -43,14 +42,14 @@ class GenerateContractWiz(models.TransientModel):
             equipment_vals = []
             for equipment in lead.equipment_id:
                 equipment_vals.append({
-                    'tender_id': contract.id,
+                    'tender_contract_id': contract.id,
                     'name': equipment.name,
                     'product_id': equipment.product_id.id,
                     'depreciation': equipment.depreciation,
                     'real_standard_price': equipment.real_standard_price,
                     'year_number': equipment.year_number,
                 })
-            self.env['equipment.template'].create(equipment_vals)
+
             for line in lead.tender_line:
                 if line.won_uom_qty > 0.0:
                     line_vals = {'tender_id': contract.id,
@@ -107,6 +106,8 @@ class GenerateContractWiz(models.TransientModel):
                         # 'product_uom': line.product_uom.id,
                         'designation': line.name,
                     }
+
+                    self.env['equipment.template'].create(equipment_vals)
                     self.env['designation.items'].create(designation_item_vals)
                     self.env['contract.lines'].create(line_vals)
                     self.env['product.pricelist.item'].create(pricelist_item_vals)

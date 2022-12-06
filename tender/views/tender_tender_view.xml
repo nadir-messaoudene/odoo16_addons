@@ -326,27 +326,23 @@
                                         </group>
                                         <group>
                                             <group>
-                                                <field name="standard_price" string="Coût"
-                                                       widget="monetary"/>
+                                                <field name="standard_price" string="Coût" widget="monetary"/>
                                                 <field name="real_standard_price" string="Coût définitif"
                                                        widget="monetary"/>
                                                 <field name="year_number" string="Nbr d'années"/>
                                             </group>
                                             <group>
                                                 <field name="depreciation" string="Amortissement annuel"
-                                                       widget="monetary"
-                                                       options="{'currency_field': 'currency_id'}"/>
+                                                       widget="monetary"/>
                                             </group>
                                         </group>
                                         <field name="name"/>
                                     </form>
                                     <tree string="Equipment Lines">
                                         <field name="name" string="Description"/>
-                                        <field name="real_standard_price" string="Coût" widget="monetary"
-                                               options="{'currency_field': 'currency_id'}"/>
+                                        <field name="real_standard_price" string="Coût" widget="monetary"/>
                                         <field name="year_number" string="Nbr d'années" style="text-align: right"/>
-                                        <field name="depreciation" string="Amortissement" widget="monetary"
-                                               options="{'currency_field': 'currency_id'}"/>
+                                        <field name="depreciation" string="Amortissement" widget="monetary"/>
                                     </tree>
                                 </field>
                             </page>
@@ -669,6 +665,23 @@
                 parent="sties_tenders_menu_tenders"
                 sequence="2"
                 action="crm_lead_all_tenders_consultation"/>
+        <menuitem id="sale_menu_contract_tenders"
+                  name="Conventions"
+                  parent="tender_management_menu_root"
+                  sequence="2"/>
+        <menuitem
+                id="menu_sale_contract_tenders"
+                name="Contrats AO"
+                parent="sale_menu_contract_tenders"
+                sequence="1"
+                action="all_contract_tenders"/>
+
+        <menuitem
+                id="menu_sale_contract_tenders_consultation"
+                name="Commandes des consultations"
+                parent="sale_menu_contract_tenders"
+                sequence="2"
+                action="all_contract_tenders_consultation"/>
 
     </data>
 </odoo> 

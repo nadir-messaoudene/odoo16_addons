@@ -4,6 +4,7 @@ class MachineTemplate(models.Model):
     _name = 'equipment.template'
 
     tender_id = fields.Many2one('crm.lead')
+    tender_contract_id = fields.Many2one('tender.contract')
     product_id = fields.Many2one('product.template', domain="[('product_type', 'in', ['equipment'])]", required=True,
                                  related=False, store=True, readonly=False)
     name = fields.Text(compute='_get_name',
